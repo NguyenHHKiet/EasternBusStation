@@ -8,7 +8,7 @@
 	<name>EasternBusStation</name>
 
 	<dependencies>
-	<!-- spring config -->
+		<!-- spring config -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
@@ -220,12 +220,12 @@
 		<dependency>
 			<groupId>org.thymeleaf</groupId>
 			<artifactId>thymeleaf</artifactId>
-			<version>3.1.0.M2</version>
+			<version>3.0.11.RELEASE</version>
 		</dependency>
 		<dependency>
-		  <groupId>org.thymeleaf</groupId>
-		  <artifactId>thymeleaf-spring4</artifactId>
-		  <version>3.0.0.RELEASE</version>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf-spring5</artifactId>
+			<version>3.0.11.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
@@ -243,7 +243,7 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.12.2</version>
 		</dependency>
-		
+
 	</dependencies>
 
 	<build>
