@@ -32,6 +32,8 @@ public class Booking implements Serializable {
 	private double totalCalculated;
 
 	private byte tripStatus;
+	
+	private double price;
 
 	//bi-directional many-to-one association to Busdata
 	@ManyToOne
@@ -132,6 +134,14 @@ public class Booking implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 }
