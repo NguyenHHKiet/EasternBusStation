@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<!--  <typeAliases>
+		<typeAlias type="com.codeing.springmvc.entity.Product" alias="myProduct"/>
+	</typeAliases> -->
+<!--  	
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"></transactionManager>
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+				<property name="url" value="jdbc:mysql://localhost:3306/blog"/>
+				<property name="username" value="root"/>
+				<property name="password" value=""/>
+			</dataSource>
+		</environment>
+	</environments>
+ -->
+ 
+<!-- step 5. 시 root-context.xml 에서 mappers 를 등록하기 때문에 주석 처리,  
+	중복에러남.	Mapped Statements collection already contains value for blog.post.recentOne.	-->	
+<!-- 
+	<mappers>
+		<mapper resource="mybatis/mappers/blog-post.xml"/>
+	</mappers>
+ -->
+</configuration>

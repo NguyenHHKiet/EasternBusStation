@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<!--  Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/static/**" location="classpath:/static/" />
+	<resources mapping="/images/**" location="/images/" />
+	<resources mapping="/css/**" location="/css/" />
+	<resources mapping="/js/**" location="/js/" /> 
+
+ 	<beans:bean id="templateResolver" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
+ 	  	<beans:property name="prefix" value="classpath:/templates/" />
+	  	<beans:property name="suffix" value=".html" />
+	  	<beans:property name="templateMode" value="HTML" />
+	  	<beans:property name="cacheable" value="false" />
+		<beans:property name="characterEncoding" value="UTF-8" />
+	</beans:bean>
+	
+	<!-- <resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/static/**" location="classpath:/static/" /> -->
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+<!--  	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+ -->
+
+	<!-- thymeleaf 설정 부분  -->
+	<!-- SpringResourceTemplateResolver automatically integrates with Spring's own -->
+	<!-- resource resolution infrastructure, which is highly recommended.          -->
+ 	
+ 	<!-- <beans:bean id="templateResolver" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
+ 	  	<beans:property name="prefix" value="classpath:/templates/" />
+	  	<beans:property name="suffix" value=".html" />
+	  HTML is the default value, added here for the sake of clarity.         
+	  	<beans:property name="templateMode" value="HTML" />
+	  Template cache is true by default. Set to false if you want            
+	  templates to be automatically updated when modified.                   
+	  	<beans:property name="cacheable" value="false" />
+		<beans:property name="characterEncoding" value="UTF-8" />
+	</beans:bean> -->
+
+	<!-- SpringTemplateEngine automatically applies SpringStandardDialect and      -->
+	<!-- enables Spring's own MessageSource message resolution mechanisms.         -->
+	 <beans:bean id="templateEngine" class="org.thymeleaf.spring5.SpringTemplateEngine">
+	  <beans:property name="templateResolver" ref="templateResolver" />
+	 <!--  Enabling the SpringEL compiler with Spring 4.2.4 or newer can speed up 
+	  execution in most scenarios, but might be incompatible with specific   
+	  cases when expressions in one template are reused across different data
+	  ypes, so this flag is "false" by default for safer backwards           
+	  compatibility.    -->                                                      
+	  <beans:property name="enableSpringELCompiler" value="true" />
+	</beans:bean> 
+
+	 <beans:bean class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
+		<beans:property name="templateEngine" ref="templateEngine" />
+		<beans:property name="characterEncoding" value="UTF-8" />
+	</beans:bean>
+	<!-- thymeleaf 설정 부분  -->
+
+	
+<!-- PropertyPlaceholderConfigurer -->
+<!-- Spring Boot 와 DB 연동 설정 시 사용되는 파일(application.properties) 접근
+	Spring 의 PropertyPlaceholderConfigurer 를 통해 설정을 외부에 저장하는 환경설정 파일로 분리
+	지정된 file 은 없으면 error
+-->
+	<beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<beans:property name="locations">
+			<beans:list>
+				<beans:value>classpath:/application.properties</beans:value>
+			</beans:list>
+		</beans:property>
+		<beans:property name="fileEncoding" value="UTF-8" />
+	</beans:bean>
+	<beans:import resource="classpath:/config/application-bean.xml" />
+
+	<!-- File Upload -->
+<!-- 	<beans:bean id="multipartResolver" 
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></beans:bean>
+ -->
+	<!-- no need commons-fileupload dependency	-->
+ 	<beans:bean id="multipartResolver" 
+		class="org.springframework.web.multipart.support.StandardServletMultipartResolver"></beans:bean>
+
+	<!-- LoggerInterceptor	 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<beans:bean id="loggerInterceptor" class="com.coeding.springmvc.interceptors.LoggerInterceptor"></beans:bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<context:component-scan base-package="com.coeding.springmvc" />
+	
+	
+	
+</beans:beans>

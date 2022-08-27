@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.role">
+
+	<select id="findAll" resultType="com.coeding.springmvc.entity.Role">
+	<![CDATA[
+		SELECT * FROM role ORDER BY id desc 
+		
+	]]>
+	</select>
+	
+	<select id="findById" parameterType="int" resultType="com.coeding.springmvc.entity.Role">
+	<![CDATA[
+		select * from role where id = #{id}
+	]]>
+	</select>
+	
+	<select id="findByRole" parameterType="string" resultType="com.coeding.springmvc.entity.Role">
+	<![CDATA[
+		select * from role where role = #{name}
+	]]>
+	</select>
+	
+	<!--
+	<select id="findAllProductByCategoryId" parameterType="int" resultType="com.coeding.springmvc.entity.Userz">
+	<![CDATA[
+		SELECT * FROM mydbcoffee.productz
+		INNER JOIN
+		mydbcoffee.categoryz
+		ON mydbcoffee.productz.category_id= mydbcoffee.categoryz._id
+		AND mydbcoffee.categoryz._id = #{id}
+		ORDER BY price DESC
+		
+	]]>
+	</select>
+	 -->
+	<insert id="create" parameterType="com.coeding.springmvc.entity.Role">
+	<![CDATA[
+		insert into role (role)
+		values (#{role})
+	]]>
+	<selectKey resultType="int" keyProperty="id" order="AFTER">
+	<![CDATA[
+	    SELECT LAST_INSERT_ID()
+	    ]]>
+	  </selectKey>
+	</insert>
+	
+	<update id="update" parameterType="com.coeding.springmvc.entity.Role">
+	<![CDATA[
+		update role set role = #{role}
+		where id = #{id}
+	]]>	
+	</update>
+	
+	<delete id="delete" parameterType="com.coeding.springmvc.entity.Role">
+	<![CDATA[
+		DELETE  FROM role
+  		WHERE id=#{id}
+	]]>	
+	</delete>
+	
+</mapper>
