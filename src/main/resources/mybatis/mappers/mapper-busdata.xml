@@ -17,7 +17,7 @@
 	]]>
 	</select>
 	
-	<select id="findByToFromAndDate" parameterType="string" resultType="com.coeding.springmvc.entity.BusData">
+	<select id="findByToFromAndDate" parameterType="map" resultType="com.coeding.springmvc.entity.BusData">
 	<![CDATA[
 		select * from busdata  
 		where toDestination =#{to}
