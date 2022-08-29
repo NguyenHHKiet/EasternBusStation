@@ -1,9 +1,13 @@
 package com.coeding.springmvc.controller;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,7 +33,7 @@ import com.coeding.springmvc.service.DefaultUserService;
 @Controller
 @RequestMapping("/dashboard")
 public class DashboardController {
-	
+
 	private DefaultUserService userService;
 
 	public DashboardController(DefaultUserService userService) {
@@ -52,14 +56,17 @@ public class DashboardController {
 	}
 
 	@GetMapping
-	public String displayDashboard(Model model) {
+	public String displayDashboard(Model model,Authentication authentication) {
+		System.out.println(authentication.getName());
+		
 		String user = returnUsername();
 		model.addAttribute("userDetails", user);
 		return "dashboard";
 	}
 
 	@PostMapping
-	public String filterBusData(@ModelAttribute("reservation") ReservationDTO reservationDTO, Model model) {
+	public String filterBusData(@ModelAttribute("reservation") ReservationDTO reservationDTO, Model model
+			) {
 		List<BusData> busData = busDataRepository.findByToFromAndDate(reservationDTO.getTo(), reservationDTO.getFrom(),
 				reservationDTO.getFilterDate());
 
@@ -97,8 +104,27 @@ public class DashboardController {
 
 	private String returnUsername() {
 		SecurityContext securityContext = SecurityContextHolder.getContext();
-		UserDetails user = (UserDetails) securityContext.getAuthentication().getPrincipal();
+		System.out.println(securityContext);
+		
+		Authentication authentication = securityContext.getAuthentication();
+		assert(authentication.isAuthenticated());
+		System.out.println(authentication);
+		//authentication is null ?????
+		UserDetails user = (UserDetails) authentication.getPrincipal();
+		System.out.println(user.getUsername());
 		User users = userRepository.findByEmail(user.getUsername());
+		System.out.println(users.getName());
 		return users.getName();
 	}
+	
+//	private String returnUsername() {
+//		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		if (principal instanceof UserDetails) {
+//			return ((UserDetails) principal).getUsername();
+//		}
+//		if (principal instanceof Principal) {
+//			return ((Principal) principal).getName();
+//		}
+//		return String.valueOf(principal);
+//	}
 }

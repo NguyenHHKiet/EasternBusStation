@@ -75,6 +75,7 @@ public class DefaultUserServiceImpl implements DefaultUserService {
 		if (user == null) {
 			throw new UsernameNotFoundException("Invalid username or password.");
 		}
+		System.out.println(user.getEmail());
 		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
 				mapRolesToAuthorities(user.getRole()));
 	}

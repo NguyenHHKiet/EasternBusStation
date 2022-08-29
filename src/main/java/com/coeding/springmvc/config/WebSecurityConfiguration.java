@@ -9,7 +9,13 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -24,13 +30,20 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private DefaultUserServiceImpl customUserDetailsService;
 
 	@Autowired
-	AuthenticationSuccessHandler successHandler;
+	CustomSuccessHandler successHandler;
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
+	
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) 
+      throws Exception {
+        auth.inMemoryAuthentication().withUser("1851050073kiet@ou.edu.vn")
+          .password(passwordEncoder().encode("$2a$10$mbxA13QdcSFFLC8YNiB0O.rNwne31Gv2fO3rOYnONT2u3lhgcgQ7e")).roles("USER");
+    }
+	
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
@@ -51,6 +64,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.invalidateHttpSession(true).clearAuthentication(true)
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout")
 				.permitAll();
+		
+		http.csrf().disable();
 
 	}
 }

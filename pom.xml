@@ -274,6 +274,15 @@
 
 	</dependencies>
 
+	<repositories>
+		<!-- ... possibly other repository elements ... -->
+		<repository>
+			<id>spring-snapshot</id>
+			<name>Spring Snapshot Repository</name>
+			<url>https://repo.spring.io/snapshot</url>
+		</repository>
+	</repositories>
+
 	<build>
 		<plugins>
 			<plugin>

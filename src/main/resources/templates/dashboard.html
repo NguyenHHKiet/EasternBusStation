@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" 
+  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="ISO-8859-1">
     <title>Bus Reservation System</title>
@@ -50,7 +51,6 @@
     <div class="container">
         <div class="row">
 
-                
 
                 <form th:action="@{/dashboard}" method="post" th:object="${reservation}">
                 

@@ -23,6 +23,13 @@
 	]]>
 	</select>
 	
+	<select id="findByRoleUser" parameterType="string" resultType="com.coeding.springmvc.entity.User">
+	<![CDATA[
+		SELECT user.* FROM busstation.user inner join busstation.role inner join busstation.users_role
+		on user.id = users_role.custId and role.id = users_role.roleId
+		and role = #{name}
+	]]>
+	</select>
 	<!--
 	<select id="findAllProductByCategoryId" parameterType="int" resultType="com.coeding.springmvc.entity.Userz">
 	<![CDATA[
