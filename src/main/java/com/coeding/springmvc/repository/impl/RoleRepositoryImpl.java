@@ -2,8 +2,7 @@ package com.coeding.springmvc.repository.impl;
 
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,65 +20,47 @@ public class RoleRepositoryImpl implements RoleRepository {
 	private static final Logger logger = LoggerFactory.getLogger(RoleRepositoryImpl.class);
 
 	@Autowired
-	private SqlSessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 	
 	@Override
-	public Role findById(int id) {
+	public void create(Role pojo) {
 		// TODO Auto-generated method stub
-		SqlSession session = this.sessionFactory.openSession();
-		Role Role = session.selectOne("mapper.role.findById", id);
-		logger.info("Role ::"+Role);
-		return Role;
+		logger.info("create(Role pojo) ::");
+		sessionFactory.getCurrentSession().saveOrUpdate(pojo);
 	}
 
 	@Override
 	public List<Role> findAll() {
 		// TODO Auto-generated method stub
-		SqlSession session = this.sessionFactory.openSession();
-		List<Role> Role = session.selectList("mapper.role.findAll");
-		for(Role p : Role){
-			logger.info("Role List::"+p);
+		return sessionFactory.getCurrentSession().createQuery("from Role").list();
+	}
+
+	@Override
+	public void delete(Integer id) {
+		// TODO Auto-generated method stub
+		Role Bookings = (Role) sessionFactory.getCurrentSession().load(Role.class, id);
+		if (null != Bookings) {
+			this.sessionFactory.getCurrentSession().delete(Bookings);
 		}
-		return Role;
 	}
 
 	@Override
-	public String create(Role pojo) {
+	public Role update(Role pojo) {
 		// TODO Auto-generated method stub
-		SqlSession session = this.sessionFactory.openSession();
-		session.insert("mapper.role.create", pojo);
-		session.commit();
-		logger.info("Create role::");
-		return "Create role";
+		sessionFactory.getCurrentSession().update(pojo);
+		return pojo;
 	}
 
 	@Override
-	public String update(Role pojo) {
+	public Role findById(int id) {
 		// TODO Auto-generated method stub
-		SqlSession session = this.sessionFactory.openSession();
-		session.update("mapper.role.update", pojo);
-		session.commit();
-		logger.info("update role::");
-		return "update role";
-	}
-
-	@Override
-	public String delete(int id) {
-		// TODO Auto-generated method stub
-		SqlSession session = this.sessionFactory.openSession();
-		session.delete("mapper.role.delete", id);
-		session.commit();
-		logger.info("delete role::");
-		return "delete role";
+		return (Role) sessionFactory.getCurrentSession().get(Role.class, id);
 	}
 
 	@Override
 	public Role findByRole(String name) {
 		// TODO Auto-generated method stub
-		SqlSession session = this.sessionFactory.openSession();
-		Role Role = session.selectOne("mapper.role.findByRole", name);
-		logger.info("Role ::"+Role);
-		return Role;
+		return (Role) sessionFactory.getCurrentSession().get(Role.class, name);
 	}
 
 }

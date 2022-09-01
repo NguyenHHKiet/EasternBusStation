@@ -6,10 +6,15 @@ import com.coeding.springmvc.entity.Role;
 
 public interface RoleRepository {
 
-	Role findById(int id);
+	void create(Role pojo);
+
 	List<Role> findAll();
-	String create(Role pojo);
-	String update(Role pojo);
-	String delete(int id);
+
+	void delete(Integer id);
+
+	Role update(Role pojo);
+
+	Role findById(int id);
+	
 	Role findByRole(String name);
 }

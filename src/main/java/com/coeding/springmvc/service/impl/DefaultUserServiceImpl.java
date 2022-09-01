@@ -64,25 +64,23 @@ public class DefaultUserServiceImpl implements DefaultUserService {
 
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+	@Override
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
+		User user = userRepo.findByEmail(email);
+		if (user == null) {
+			throw new UsernameNotFoundException("Invalid username or password.");
+		}
+		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
+				mapRolesToAuthorities(user.getRole()));
+	}
+
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Set<Role> roles) {
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getRole())).collect(Collectors.toList());
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		User user = userRepo.findByEmail(email);
-		if (user == null) {
-			throw new UsernameNotFoundException("Invalid username or password.");
-		}
-		System.out.println(user.getEmail());
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
-				mapRolesToAuthorities(user.getRole()));
-	}
-
-	@Override
 	public User save(UserRegisteredDTO userRegisteredDTO) {
-		// TODO Auto-generated method stub
 		Role role = new Role();
 		if (userRegisteredDTO.getRole().equals("USER"))
 			role = roleRepo.findByRole("USER");
@@ -93,15 +91,12 @@ public class DefaultUserServiceImpl implements DefaultUserService {
 		user.setName(userRegisteredDTO.getName());
 		user.setPassword(passwordEncoder.encode(userRegisteredDTO.getPassword()));
 		user.setRole(role);
-
 		userRepo.create(user);
-
 		return user;
 	}
 
 	@Override
 	public Bookings updateBookings(BookingsDTO bookingDTO, UserDetails user) {
-		// TODO Auto-generated method stub
 		Bookings booking = new Bookings();
 		String email = user.getUsername();
 		User users = userRepo.findByEmail(email);
@@ -116,9 +111,8 @@ public class DefaultUserServiceImpl implements DefaultUserService {
 		booking.setTripStatus(true);
 		String filename = generatePDFAndSendMail(bookingDTO, users);
 		booking.setFileName(filename);
-
+		
 		bookingRepository.create(booking);
-
 		return booking;
 	}
 
@@ -139,7 +133,6 @@ public class DefaultUserServiceImpl implements DefaultUserService {
 
 	@Override
 	public void sendEmail(BookingsDTO bookingDTO, User users, String nameGenrator) {
-		// TODO Auto-generated method stub
 		try {
 			final String username = "";// email id of sender
 			final String password = "";// application password of Gmail , I dont know how to generate watch this

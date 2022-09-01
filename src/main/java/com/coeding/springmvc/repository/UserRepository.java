@@ -6,10 +6,15 @@ import com.coeding.springmvc.entity.User;
 
 public interface UserRepository {
 
-	User findById(int id);
+	void create(User pojo);
+
 	List<User> findAll();
-	String create(User pojo);
-	String update(User pojo);
-	String delete(int id);
+
+	void delete(Integer id);
+
+	User update(User pojo);
+
+	User findById(int id);
+	
 	User findByEmail(String emailId);
 }
