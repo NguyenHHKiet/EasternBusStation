@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Bus Reservation System</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+</head>
+<style>
+.navbar {
+	background-color: #d9edf7;
+}
+
+input, label {
+	display: block;
+}
+</style>
+<body>
+
+	<form th:action="@{/pay}" method="post" th:object="${record}">
+		<div class="container">
+			<h1>Payment PayPal</h1>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group" style="width: 21%;">
+						<label class="control-label" for="from"> From </label> <input
+							id="from" class="form-control" th:field="*{fromDestination}"
+							required readonly="readonly" autofocus="autofocus" />
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group" style="width: 21%;">
+						<label class="control-label" for="to"> To </label> <input id="to"
+							class="form-control" th:field="*{toDestination}" required
+							readonly="readonly" autofocus="autofocus" />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label class="control-label" for="filterDate">Date </label><input
+							type="date" th:field="*{filterDate}" id="filterDate" required
+							readonly="readonly" autofocus="autofocus" />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group" style="width: 21%;">
+						<label class="control-label" for="noOfPersons"> No of
+							Persons </label> <input id="noOfPersons" class="form-control"
+							th:field="*{noOfPersons}" required autofocus="autofocus"
+							readonly="readonly" onchange="updateFiled();" />
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group" style="width: 21%;">
+						<label class="control-label" for="totalCalculated"> Total
+							Amount to be Paid </label> <input id="totalCalculated"
+							class="form-control" th:field="*{totalCalculated}" required
+							readonly="readonly" autofocus="autofocus" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group" style="width: 21%;">
+						<label class="control-label" for="busName"> Bus Name </label> <input
+							id="busName" class="form-control" th:field="*{busName}" required
+							readonly="readonly" autofocus="autofocus" />
+					</div>
+				</div>
+
+
+
+				<div class="col-md-6">
+
+					<div class="form-group" style="width: 21%;">
+						<label class="control-label" for="time"> Departure Time </label> <input
+							id="time" class="form-control" th:field="*{time}" required
+							readonly="readonly" autofocus="autofocus" />
+					</div>
+
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary"
+							style="margin-top: 25px;">Pay</button>
+
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<span>Go To Dashboard <a href="/" th:href="@{/dashboard}">DashBoard
+						</a></span>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</form>
+
+</body>
+</html>

@@ -18,6 +18,6 @@ public interface BusDataRepository {
 
 	BusData findById(int id);
 
-	@Query(value = "select * from BusData  where busdata.toDestination =:to and busdata.fromDestination =:from and busdata.filterDate =:date  order By busdata.filterDate desc ", nativeQuery = true)
+//	@Query(value = "select * from BusData  where busdata.toDestination =:to and busdata.fromDestination =:from and busdata.filterDate =:date  order By busdata.filterDate desc ", nativeQuery = true)
 	List<BusData> findByToFromAndDate(String to, String from, String date);
 }

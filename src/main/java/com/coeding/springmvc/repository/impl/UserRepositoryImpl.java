@@ -3,9 +3,11 @@ package com.coeding.springmvc.repository.impl;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +19,7 @@ import com.coeding.springmvc.repository.UserRepository;
 public class UserRepositoryImpl implements UserRepository {
 
 	@Autowired
-	private static final Logger logger = LoggerFactory.getLogger(BookingsRepositoryImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserRepositoryImpl.class);
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -58,9 +60,12 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	public User findByEmail(String emailId) {
+	public User findByEmail(String email) {
 		// TODO Auto-generated method stub
-		return (User) sessionFactory.getCurrentSession().get(User.class, emailId);
+		Query query = sessionFactory.getCurrentSession().createQuery("from User where email= :email");
+		query.setString("email", email);
+		User e = (User) query.uniqueResult();
+		return e;
 	}
 
 }

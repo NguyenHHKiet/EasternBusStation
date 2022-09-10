@@ -3,6 +3,7 @@ package com.coeding.springmvc.repository.impl;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,9 +59,12 @@ public class RoleRepositoryImpl implements RoleRepository {
 	}
 
 	@Override
-	public Role findByRole(String name) {
+	public Role findByRole(String role) {
 		// TODO Auto-generated method stub
-		return (Role) sessionFactory.getCurrentSession().get(Role.class, name);
+		Query query = sessionFactory.getCurrentSession().createQuery("from Role where role= :role");
+		query.setString("role", role);
+		Role r = (Role) query.uniqueResult();
+		return r;
 	}
 
 }

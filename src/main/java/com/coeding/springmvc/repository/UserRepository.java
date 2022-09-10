@@ -15,6 +15,7 @@ public interface UserRepository {
 	User update(User pojo);
 
 	User findById(int id);
-	
+
 	User findByEmail(String emailId);
+
 }

@@ -12,10 +12,10 @@ public interface DefaultUserService extends UserDetailsService{
 
 	User save(UserRegisteredDTO userRegisteredDTO);
 
-	Bookings updateBookings(BookingsDTO bookingDTO,UserDetails user);
+	Bookings updateBookings(BookingsDTO bookingDTO,User user);
 	
 	void sendEmail(BookingsDTO bookingDTO, User users, String nameGenrator);
 
-
+	User login(String email, String password);
 	
 }

@@ -59,10 +59,9 @@ public class BusDataRepositoryImpl implements BusDataRepository {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public List<BusData> findByToFromAndDate(String to, String from, String date) {
 		// TODO Auto-generated method stub
-		return sessionFactory.getCurrentSession().createQuery("FROM BusData WHERE to = :to AND from = :from AND date = :date")
+		return sessionFactory.getCurrentSession().createQuery("select b from BusData b  where b.toDestination =:to and b.fromDestination =:from and b.filterDate =:date  order By b.filterDate desc ")
 				.setParameter("to", to).setParameter("from", from).setParameter("date", date).list();
 	}
 

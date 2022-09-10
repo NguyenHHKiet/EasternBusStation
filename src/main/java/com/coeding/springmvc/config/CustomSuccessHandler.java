@@ -23,6 +23,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 		String redirectUrl = null;
 
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+		System.out.println("authorities::"+authorities);
 		for (GrantedAuthority grantedAuthority : authorities) {
 			if (grantedAuthority.getAuthority().equals("USER")) {
 				redirectUrl = "/dashboard";

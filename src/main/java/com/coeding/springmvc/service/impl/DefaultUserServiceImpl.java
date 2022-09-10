@@ -96,9 +96,9 @@ public class DefaultUserServiceImpl implements DefaultUserService {
 	}
 
 	@Override
-	public Bookings updateBookings(BookingsDTO bookingDTO, UserDetails user) {
+	public Bookings updateBookings(BookingsDTO bookingDTO, User user) {
 		Bookings booking = new Bookings();
-		String email = user.getUsername();
+		String email = user.getEmail();
 		User users = userRepo.findByEmail(email);
 		booking.setBusName(bookingDTO.getBusName());
 		booking.setFilterDate(bookingDTO.getFilterDate());
@@ -111,7 +111,7 @@ public class DefaultUserServiceImpl implements DefaultUserService {
 		booking.setTripStatus(true);
 		String filename = generatePDFAndSendMail(bookingDTO, users);
 		booking.setFileName(filename);
-		
+
 		bookingRepository.create(booking);
 		return booking;
 	}
@@ -134,7 +134,7 @@ public class DefaultUserServiceImpl implements DefaultUserService {
 	@Override
 	public void sendEmail(BookingsDTO bookingDTO, User users, String nameGenrator) {
 		try {
-			final String username = "";// email id of sender
+			final String username = "nhoangkiet35@gmail.com";// email id of sender
 			final String password = "";// application password of Gmail , I dont know how to generate watch this
 										// https://bit.ly/3PY4IeS
 
@@ -219,6 +219,18 @@ public class DefaultUserServiceImpl implements DefaultUserService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public User login(String email, String password) {
+		// TODO Auto-generated method stub
+		User temp = userRepo.findByEmail(email);
+		if (temp != null) {
+			if (passwordEncoder.matches(password, temp.getPassword())) {
+				return temp;
+			}
+		}
+		return null;
 	}
 
 }

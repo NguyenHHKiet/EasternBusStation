@@ -1,5 +1,6 @@
 package com.coeding.springmvc.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,34 +12,34 @@ import javax.persistence.Table;
 public class Bookings {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	
-	private int noOfPersons ;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	@Column
+	private Integer noOfPersons ;
+	@Column
 	private Double totalCalculated ;
-	
+	@Column
 	private String filterDate;
-	
+	@Column
 	private String toDestination;
-	
+	@Column
 	private String fromDestination;
-	
+	@Column
 	private String BusName;
-	
-	private int userId;
-	
+	@Column
+	private Integer userId;
+	@Column
 	private String time;
-	
+	@Column
 	private String fileName;
-	
-	private boolean tripStatus;
+	@Column
+	private Boolean tripStatus;
 
 	public int getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -46,7 +47,7 @@ public class Bookings {
 		return noOfPersons;
 	}
 
-	public void setNoOfPersons(int noOfPersons) {
+	public void setNoOfPersons(Integer noOfPersons) {
 		this.noOfPersons = noOfPersons;
 	}
 
@@ -94,7 +95,7 @@ public class Bookings {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
@@ -118,7 +119,7 @@ public class Bookings {
 		return tripStatus;
 	}
 
-	public void setTripStatus(boolean tripStatus) {
+	public void setTripStatus(Boolean tripStatus) {
 		this.tripStatus = tripStatus;
 	}
 	

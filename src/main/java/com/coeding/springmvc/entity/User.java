@@ -3,6 +3,7 @@ package com.coeding.springmvc.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,25 +19,25 @@ import javax.persistence.Table;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	@Column
 	private String name;
-	
+	@Column
 	private String email;
-	
+	@Column
 	private String password;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "users_role", joinColumns = @JoinColumn(name = "cust_id", referencedColumnName = "id"),
-	inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id") )
+	@JoinTable(name = "usersRole", joinColumns = @JoinColumn(name = "custId", referencedColumnName = "id"),
+	inverseJoinColumns = @JoinColumn(name = "roleId", referencedColumnName = "id") )
 	Set<Role> roles = new HashSet<Role>();
 
 	public int getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

@@ -1,6 +1,7 @@
 package com.coeding.springmvc.entity;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,19 +13,19 @@ import javax.persistence.Table;
 public class BusData {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	@Column
     private String filterDate;
-	
+	@Column
 	private String toDestination;
-	
+	@Column
 	private String fromDestination;
-	
+	@Column
 	private Double price; 
-	
+	@Column
 	private String BusName;
-	
+	@Column
 	private String time;
 	
 	
@@ -32,7 +33,7 @@ public class BusData {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
